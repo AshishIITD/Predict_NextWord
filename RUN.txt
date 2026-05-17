@@ -1,0 +1,50 @@
+HOW TO RUN THIS PROJECT
+=======================
+
+This project can be run on any laptop (Mac, Windows, or Linux). 
+There are two ways to set it up: Method 1 (Recommended, easiest) and Method 2 (Standard Python).
+
+METHOD 1: USING UV (Easiest and Recommended)
+============================================
+The project uses `uv` for lightning-fast, reproducible environment management.
+
+1. Install uv (if you don't have it):
+   - On Mac/Linux:
+     curl -LsSf https://astral.sh/uv/install.sh | sh
+   - On Windows:
+     powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+2. Setup the environment:
+   uv sync
+
+3. Run the training:
+   uv run python -m src.train
+
+4. Run evaluation:
+   uv run python -m src.evaluate
+
+5. Run text generation demo:
+   uv run python -m src.generate
+
+
+METHOD 2: USING STANDARD PIP (Fallback)
+=======================================
+If you prefer not to use `uv`, you can use standard Python `venv` and `pip`.
+
+1. Create a virtual environment:
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
+
+2. Install dependencies:
+   pip install --upgrade pip
+   
+   # For Apple Silicon Mac (M1/M2/M3), Linux, or Windows:
+   pip install tensorflow matplotlib requests scikit-learn jupyter seaborn
+   
+   # For Intel-based Mac (Older Macs):
+   pip install tensorflow-macos==2.12.0 keras==2.12.0 numpy==1.24.3 matplotlib requests scikit-learn jupyter seaborn
+
+3. Run the project:
+   python -m src.train
+   python -m src.evaluate
+   python -m src.generate

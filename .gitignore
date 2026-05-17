@@ -1,0 +1,20 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Local environments
+.venv/
+.venv_arm64/
+
+# Large/generated artifacts. Keep directories documented in README.
+outputs/*.keras
+outputs/*.h5
+outputs/*.png
+outputs/*.json
+outputs/*.csv
+data/*.pkl
+data/*_clean.txt
+
+# Logs
+*.log

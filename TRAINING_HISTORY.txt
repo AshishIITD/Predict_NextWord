@@ -1,0 +1,53 @@
+TRAINING HISTORY AND ATTEMPTS
+=============================
+
+This file documents the training attempts made to reach the target metrics:
+- Train Top-5 Accuracy > 80%
+- Val Top-5 Accuracy > 75%
+- Val Perplexity < 250
+
+ATTEMPT 1: Initial Run (With Preprocessing Bug)
+-----------------------------------------------
+- Architecture: BiLSTM + Attention (Advanced)
+- Vocabulary Size: 10,000
+- Issue: Preprocessing regex `\b[ivxlcdm]{1,8}\b` accidentally deleted the word "I" and words like "mid", "dim".
+- Results: Plateaued at ~33% Validation Top-5 accuracy.
+
+ATTEMPT 2: Fixed Preprocessing (10k Vocabulary)
+-----------------------------------------------
+- Architecture: BiLSTM + Attention (Advanced)
+- Vocabulary Size: 10,000
+- Fixes applied: Preserved punctuation, fixed the "I" deletion bug, added <EOS> tokens.
+- Results: 
+  * Epoch 1: 33.62% Val Top-5
+  * Epoch 10: ~41.00% Val Top-5
+  * Epoch 27: 42.00% Val Top-5 (PEAK)
+- Conclusion: Plateaued around 42% due to data-sparsity (10k words is too many for a small corpus of ~100k words).
+
+ATTEMPT 3: Reduced Vocabulary (3k Vocabulary)
+-----------------------------------------------
+- Architecture: BiLSTM + Attention (Advanced)
+- Vocabulary Size: 3,000 (Reduced to fight data-sparsity)
+- Fixes applied: Monitored `val_accuracy` instead of `val_top5_accuracy` to prevent premature stopping.
+- Results:
+  * Epoch 1: 37.46% Val Top-5
+  * Epoch 3: 41.88% Val Top-5
+  * Epoch 17: 46.23% Val Top-5 (PEAK)
+- Conclusion: Reached a higher peak of 46.23% in 17 epochs before plateauing and learning rate reduction.
+
+ATTEMPT 4: Further Reduced Vocabulary (2k Vocabulary) - CURRENT
+---------------------------------------------------------------
+- Architecture: BiLSTM + Attention (Advanced)
+- Vocabulary Size: 2,000 (Further reduced to push accuracy higher)
+- Fixes applied: Same as Attempt 3.
+- Results: 
+  * Epoch 1: 38.61% Val Top-5
+  * Epoch 12: 46.60% Val Top-5 (PEAK so far)
+- Current Status: This is the current active run. It is performing the best so far.
+
+PATH B (Alternative): Pre-trained GloVe Embeddings
+--------------------------------------------------
+- Architecture: BiLSTM + Attention (Advanced) + Pre-trained GloVe
+- Idea: Replace random embeddings with pre-trained GloVe weights (e.g., `glove.6B.100d.txt`) to give the model semantic relationships between words that it cannot learn from the small Sherlock Holmes corpus alone.
+- Potential: This is the only technical change with a realistic chance of hitting the 75% target on this small corpus.
+- Status: Code for loading embeddings and building the model is implemented in `src/model_glove.py`. Pending download of the 822MB GloVe file by the user.

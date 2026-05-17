@@ -1,0 +1,78 @@
+REPORT: NEXT-WORD PREDICTION WITH LSTM AND ATTENTION
+====================================================
+
+OBJECTIVE
+---------
+The system predicts the next word in a sentence using a neural language model trained on "The Adventures of Sherlock Holmes". It is implemented as a reusable TensorFlow/Keras project with script and notebook entry points.
+
+DATA PIPELINE
+-------------
+1. Download: src/data_loader.py downloads the UTF-8 Project Gutenberg text and validates that it contains the expected Sherlock Holmes corpus.
+2. Boilerplate removal: Gutenberg header/footer text is stripped before modeling.
+3. Cleaning: text is lowercased, chapter/adventure headings are removed, punctuation is stripped while apostrophes are retained, and whitespace is normalized.
+4. Tokenization: Keras Tokenizer builds a capped word vocabulary with an explicit <OOV> token and padding id 0.
+5. Sequence generation: a sliding window of 15 context tokens predicts the next token. Targets are sparse integer ids rather than one-hot vectors.
+6. Splitting: the training script creates deterministic train, validation, and test splits.
+
+MODEL ARCHITECTURE
+------------------
+Input context tokens
+-> Embedding(vocab_size, 128, mask_zero=True)
+-> Bidirectional LSTM(256, return_sequences=True)
+-> Bahdanau-style additive attention
+-> Dense(256, relu)
+-> Dropout(0.3)
+-> Dense(vocab_size, softmax)
+
+The model optimizes sparse categorical cross-entropy with Adam and reports top-1 and top-5 sparse categorical accuracy.
+
+ATTENTION MECHANISM
+-------------------
+The BiLSTM returns hidden states. Because next-word prediction has no decoder state, the attention layer uses the mean hidden state as an encoder-side query. This helps because the final LSTM state can compress away useful early context. Attention lets the classifier focus on evidence-bearing tokens anywhere in the context window. The attention weights are also interpretable and are visualized with plot_attention_heatmap().
+
+TRAINING AND EVALUATION
+-----------------------
+Run: uv run python -m src.train
+
+Artifacts:
+- outputs/best_model.keras
+- outputs/final_model.keras
+- outputs/training_history.png
+- outputs/training_history.json
+- outputs/training_history.csv
+- outputs/metrics.json
+
+Metrics recorded for train, validation, and test:
+- cross-entropy loss
+- top-1 accuracy
+- top-5 accuracy
+- perplexity, computed as exp(loss)
+
+Targets:
+- Training accuracy: > 80%
+- Validation/test accuracy: > 75%
+- Perplexity: < 250
+
+The repository stores the machinery to reproduce and report those metrics. The authoritative values for a submitted run should be copied from outputs/metrics.json after training in the target environment.
+
+Note on Vocabulary Size: To combat data sparsity on this small corpus, we reduced the vocabulary size from the initial 10,000 to 3,000 and finally to 2,000. This significantly improved the top-5 accuracy.
+
+TEXT GENERATION
+---------------
+src/generate.py implements text generation with various decoding strategies:
+- greedy argmax
+- top-k sampling
+- nucleus sampling
+- full multinomial sampling
+
+Each generated step stores input context, selected word, selected probability, and top-5 candidate words and probabilities.
+
+ENGINEERING QUALITY
+-------------------
+The final project uses:
+- central dataclass-based configuration in src/config.py
+- type hints and docstrings
+- logging instead of ad-hoc prints
+- deterministic seeds and split logic
+- reusable plotting and evaluation helpers
+- uv dependency management through pyproject.toml

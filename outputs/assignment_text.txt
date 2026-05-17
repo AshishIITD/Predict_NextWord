@@ -1,0 +1,53 @@
+--- Page 1 ---
+ 
+ 
+Assignment  
+Next-Word Prediction with Recurrent Neural Networks  
+  
+Objective:  
+The goal of this assignment is to build, train, and evaluate a neural network capable of predicting the 
+next word in a sentence.  
+  
+Next-word prediction is a foundational task in NLP . It's the technology that powers features like 
+autocomplete in search engines, predictive text on your phone, and is a core component of more 
+advanced Large Language Models (LLMs). The model learns the statistical relationships between words 
+in a large body of text to predict which word is most likely to follow a given sequence of words.  
+  
+In this assignment, you will implement a model using a Long Short-Term Memory (LSTM) network, a 
+type of Recurrent Neural Network (RNN) especially well-suited for learning from sequential data.  
+  
+Core Tasks 
+Need to follow all these tasks):  
+1. Dataset: You will use the classic novel "The Adventures of Sherlock Holmes" by Arthur Conan 
+Doyle as your training corpus. It is large enough to learn interesting patterns but small enough 
+to train on a standard laptop.  
+a. Download Link: Project Gutenberg - The Adventures of Sherlock Holmes  
+(Plain Text UTF-8)  
+b. Your first task is to write a script to download and load this text file.  
+2. Data Preprocessing: Automatically process the given dataset to be used for training, including 
+but not limited to cleaning the data, tokenization and training sequence generation.  
+3. Model Implementation: Build a neural network with an LSTM Layer and additional layers as 
+required. An LSTM layer with 100
+256 units is a good starting point.  
+a. You should be able to explain the model architecture.  
+b. Additionally,  implement an Attention Mechanism by adding an attention layer on top 
+of your LSTM network. Describe and provide reasons why you chose a specific attention 
+mechanism.  
+4. Training: Compile the model using an appropriate loss function and an optimizer. Train the 
+model on the sequences you generated. Monitor the loss and accuracy during training.  
+5. Text Generation Function: Create a function that uses your trained model to generate new text. 
+This function should:  
+
+--- Page 2 ---
+ 
+ 
+ 
+
+
+--- Page 3 ---
+ 
+ 
+ 
+I   If you have any questions or need any clarification regarding the assignment, please feel free to reach 
+out to hr@abottstech.com, and we will get back to you accordingly 
+

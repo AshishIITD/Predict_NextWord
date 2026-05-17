@@ -121,14 +121,17 @@ def compute_metrics(model, X, y, split_name: str = "val", batch_size: int = 512)
         ],
     )
     results = model.evaluate(X, y, batch_size=batch_size, verbose=0)
-    names   = model.metrics_names
-    metrics = {n: v for n, v in zip(names, results)}
+    metrics = {
+        "loss": results[0],
+        "accuracy": results[1] if len(results) > 1 else 0,
+        "top5_acc": results[2] if len(results) > 2 else 0,
+    }
     metrics["perplexity"] = float(np.exp(np.clip(metrics["loss"], None, 50)))
 
     print(f"\n  [{split_name}]  "
           f"Loss={metrics['loss']:.4f}  "
           f"Top-1 Acc={metrics['accuracy']*100:.2f}%  "
-          f"Top-5 Acc={metrics.get('top5_acc', 0)*100:.2f}%  "
+          f"Top-5 Acc={metrics['top5_acc']*100:.2f}%  "
           f"Perplexity={metrics['perplexity']:.2f}")
     return metrics
 

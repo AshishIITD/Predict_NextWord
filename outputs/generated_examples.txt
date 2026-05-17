@@ -1,0 +1,43 @@
+Generated Text Examples
+========================
+
+These examples were generated using the trained LSTM + Attention model on the Sherlock Holmes corpus.
+Decoding strategy: top_k (k=5), temperature=0.8.
+
+Example 1
+---------
+Seed: It was a dark and stormy
+Generated: it was a dark and stormy one, which i had never seen in the evening before <eos> <eos> <eos> <eos> of the hound <eos> and the house is a small place of a child <eos> <eos> and the loss of the
+
+Example 2
+---------
+Seed: Holmes looked at the
+Generated: holmes looked at the card and took out a small black box which he closed upon his knee <eos> the whole case in which he had been a very different one <eos> <eos> of the whole story of the
+
+Example 3
+---------
+Seed: The game is
+Generated: the game is to be seen in the house <eos> but we shall be very happy to know what it will <eos> <eos> said holmes <eos> at last <eos> <eos> <eos> <eos> <eos> the famous secretary and mycroft
+
+Example 4
+---------
+Seed: Watson I need your
+Generated: watson i need your help to see him to your rooms <eos> <eos> but you have been able to get a little time to the special way <eos> but i am not sure that, as you know, you must
+
+Example 5
+---------
+Seed: She entered the room and
+Generated: she entered the room and was able to get into the house, and that i have never seen the man <eos> and to get a wire to the window <eos> of the house, and i have no doubt that you
+
+
+Step-by-Step Breakdown for Example 1 (Snippet)
+----------------------------------------------
+To fulfill requirement 4b of the assignment, here is a breakdown of the top 5 candidates considered at a step:
+
+Step  31 | Context: "had been in the direction of the dead man, but it was not the very"
+         | Chosen : "first" (13.28%)
+         | Rank 1: first                13.28% <- chosen
+         | Rank 2: picture               8.45%
+         | Rank 3: morning               6.48%
+         | Rank 4: simple                5.82%
+         | Rank 5: papers,               4.92%
